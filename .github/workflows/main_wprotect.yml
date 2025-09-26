@@ -1,11 +1,11 @@
 # Docs for the Azure Web Apps Deploy action: 
-https://github.com/Azure/webapps-deploy
+# https://github.com/Azure/webapps-deploy
 
 # More GitHub Actions for Azure: 
-https://github.com/Azure/actions
+# https://github.com/Azure/actions
 
 
-name: Build and deploy JAR app to Azure Web App - oikoom
+name: Build and deploy JAR app to Azure Web App - wprotect
 
 on:
   push:
@@ -58,3 +58,4 @@ jobs:
           slot-name: 'Production'
           package: '*.jar'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7543774C61BC492BA9D1733EEE147DA0 }} 
+
