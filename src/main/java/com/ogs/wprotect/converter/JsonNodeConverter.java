@@ -1,4 +1,4 @@
-package com.ogs.oikoom.converter;
+package com.ogs.wprotect.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

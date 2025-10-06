@@ -5,7 +5,7 @@ public class Wcontact {
     private String name;
     private String phone;
     private String alias;
-    private Integer userId;
+    private Integer wusuarioId;
     private Wuser wuser;
 
     public Integer getId() {
@@ -40,12 +40,12 @@ public class Wcontact {
         this.alias = alias;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getWusuarioId() {
+        return wusuarioId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setWusuarioId(Integer userId) {
+        this.wusuarioId = userId;
     }
 
     public Wuser getWuser() {

@@ -17,7 +17,7 @@ public interface WcontactMapper {
             @Mapping(source = "nombre", target = "name"),
             @Mapping(source = "telefono", target = "phone"),
             @Mapping(source = "alias", target = "alias"),
-            @Mapping(source = "wusuarioId", target = "userId"),
+            @Mapping(source = "wusuarioId", target = "wusuarioId"),
             @Mapping(source = "wusuario", target = "wuser"),
     })
     Wcontact toWcontact(Wcontacto wcontacto);
