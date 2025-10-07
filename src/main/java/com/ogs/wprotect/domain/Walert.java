@@ -3,8 +3,8 @@ package com.ogs.wprotect.domain;
 public class Walert {
     private Integer id;
     private String message;
-    private String latitude;
-    private String longitude;
+    private String latitud;
+    private String longitud;
     private String timestamp;
     private Integer userId;
     private Wuser wuser;
@@ -26,22 +26,21 @@ public class Walert {
         this.message = message;
     }
 
-    public String getLatitude() {
-        return latitude;
+    public String getLatitud() {
+        return latitud;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
     }
 
-    public String getLongitude() {
-        return longitude;
+    public String getLongitud() {
+        return longitud;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
     }
-
     public String getTimestamp() {
         return timestamp;
     }

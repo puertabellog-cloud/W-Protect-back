@@ -12,8 +12,8 @@ public interface WalertMapper {
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "mensaje", target = "message"),
-            @Mapping(source = "latitud", target = "latitude"),
-            @Mapping(source = "longitud", target = "longitude"),
+            @Mapping(source = "latitud", target = "latitud"),
+            @Mapping(source = "longitud", target = "longitud"),
             @Mapping(source = "timestamp", target = "timestamp"),
             @Mapping(source = "userId", target = "userId"),
             @Mapping(source = "wusuario", target = "wuser"),
