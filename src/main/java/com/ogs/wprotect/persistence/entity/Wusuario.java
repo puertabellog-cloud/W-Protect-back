@@ -22,49 +22,6 @@ public class Wusuario {
     private List<Wcontacto> wcontactos;
     @OneToMany(mappedBy = "wusuario")
     private List<Walerta> walertas;
-    // ✅ AGREGAR ESTOS CAMPOS PARA TRACKING:
-    private String latitudActual;
-    private String longitudActual;
-
-    @Column(name = "ultima_actualizacion_ubicacion")
-    private String ultimaActualizacionUbicacion;
-
-    @Column(name = "ubicacion_activa")
-    private Boolean ubicacionActiva; // Para saber si está compartiendo ubicación
-
-
-    public String getLatitudActual() {
-        return latitudActual;
-    }
-
-    public void setLatitudActual(String latitudActual) {
-        this.latitudActual = latitudActual;
-    }
-
-    public String getLongitudActual() {
-        return longitudActual;
-    }
-
-    public void setLongitudActual(String longitudActual) {
-        this.longitudActual = longitudActual;
-    }
-
-    public String getUltimaActualizacionUbicacion() {
-        return ultimaActualizacionUbicacion;
-    }
-
-    public void setUltimaActualizacionUbicacion(String ultimaActualizacionUbicacion) {
-        this.ultimaActualizacionUbicacion = ultimaActualizacionUbicacion;
-    }
-
-    public Boolean getUbicacionActiva() {
-        return ubicacionActiva;
-    }
-
-    public void setUbicacionActiva(Boolean ubicacionActiva) {
-        this.ubicacionActiva = ubicacionActiva;
-    }
-
     public Integer getUsuarioId() {
         return usuarioId;
     }
