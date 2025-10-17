@@ -17,6 +17,7 @@ public class WalertaRepository implements WalertRepository {
     @Override
     public Walert save(Walert walert){
         Walerta walerta = walertMapper.toWalerta(walert);
+
         return walertMapper.toWalert(walertaCrudRepository.save(walerta));
     }
 }

@@ -10,6 +10,16 @@ public class Walert {
     private Wuser wuser;
     private Integer contactsNotified;
 
+    public Boolean getEmergencyMode() {
+        return emergencyMode;
+    }
+
+    public void setEmergencyMode(Boolean emergencyMode) {
+        this.emergencyMode = emergencyMode;
+    }
+
+    private Boolean emergencyMode;
+
     public Integer getId() {
         return id;
     }

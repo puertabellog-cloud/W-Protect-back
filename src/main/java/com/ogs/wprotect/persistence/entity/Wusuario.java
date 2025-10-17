@@ -22,6 +22,18 @@ public class Wusuario {
     private List<Wcontacto> wcontactos;
     @OneToMany(mappedBy = "wusuario")
     private List<Walerta> walertas;
+
+    public Boolean getEmergencyMode() {
+        return emergencyMode;
+    }
+
+    public void setEmergencyMode(Boolean emergencyMode) {
+        this.emergencyMode = emergencyMode;
+    }
+
+    @Column(name = "emergency_mode", columnDefinition = "boolean default false", nullable = false)
+    private Boolean emergencyMode;
+
     public Integer getUsuarioId() {
         return usuarioId;
     }

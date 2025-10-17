@@ -22,6 +22,7 @@ public class WuserService implements UserDetailsService {
     public Wuser getByEmail(String email){
         return wuserRepository.getByEmail(email);
     }
+    public Optional<Wuser> getById(Integer id){return wuserRepository.getById(id);}
     public Wuser save(Wuser wuser){
         return wuserRepository.save(wuser);
     }
