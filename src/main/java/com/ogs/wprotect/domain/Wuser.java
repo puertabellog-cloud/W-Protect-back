@@ -6,7 +6,6 @@ public class Wuser {
     private String email;
     private String phone;
     private String profile;
-    private String deviceId;
     private boolean active;
 
     public int getId() {
@@ -55,13 +54,5 @@ public class Wuser {
 
     public void setProfile(String profile) {
         this.profile = profile;
-    }
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
     }
 }

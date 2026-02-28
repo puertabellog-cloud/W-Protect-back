@@ -7,7 +7,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-import java.util.List;
 @Mapper(componentModel = "spring")
 public interface WuserMapper {
     @Mappings({
@@ -16,7 +15,6 @@ public interface WuserMapper {
             @Mapping(source = "email", target = "email"),
             @Mapping(source = "perfil", target = "profile"),
             @Mapping(source = "telefono", target = "phone"),
-            @Mapping(source = "dispositivoId", target = "deviceId"),
             @Mapping(source = "activo", target = "active")
     })
     Wuser toWuser(Wusuario wusuario);

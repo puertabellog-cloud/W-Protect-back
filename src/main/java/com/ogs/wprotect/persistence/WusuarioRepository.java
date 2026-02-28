@@ -35,10 +35,6 @@ public class WusuarioRepository implements WuserRepository {
         return mapper.toWuser(wusuarioCrudRepository.save(wusuario));
     }
     @Override
-    public Optional<Wuser> getByDeviceId(String deviceId){
-        return  wusuarioCrudRepository.findByDispositivoId(deviceId).map(wusuario -> mapper.toWuser(wusuario));
-    }
-    @Override
     public Optional<Wuser> getByPhone(String phone){
        return wusuarioCrudRepository.findByTelefono(phone).map(wusuario -> mapper.toWuser(wusuario));
     }

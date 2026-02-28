@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/w/users")
 public class WuserController {
@@ -23,10 +21,5 @@ public class WuserController {
         System.out.println("hola");
         System.out.println(wuser.getName());
         return new ResponseEntity<>(wuserService.save(wuser), HttpStatus.OK);
-    }
-    @GetMapping("device/{id}")
-    public ResponseEntity<Optional<Wuser>> getByDeviceId(@PathVariable("id") String deviceId){
-        System.out.println("el tema del tiempo");
-        return new ResponseEntity<>(wuserService.getByDeviceId(deviceId), HttpStatus.OK);
     }
 }

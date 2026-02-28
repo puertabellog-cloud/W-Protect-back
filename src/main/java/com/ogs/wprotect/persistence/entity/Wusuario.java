@@ -15,8 +15,6 @@ public class Wusuario {
     private String email;
     private String perfil;
     private String telefono;
-    @Column(name = "dispositivo_id")
-    private String dispositivoId;
     private Boolean activo;
     @OneToMany(mappedBy = "wusuario")
     private List<Wcontacto> wcontactos;
@@ -80,14 +78,6 @@ public class Wusuario {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
-    }
-
-    public String getDispositivoId() {
-        return dispositivoId;
-    }
-
-    public void setDispositivoId(String dispositivoId) {
-        this.dispositivoId = dispositivoId;
     }
 
     public List<Wcontacto> getWcontactos() {
