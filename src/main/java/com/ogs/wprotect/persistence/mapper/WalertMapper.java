@@ -18,6 +18,11 @@ public interface WalertMapper {
             @Mapping(source = "userId", target = "userId"),
             @Mapping(source = "wusuario", target = "wuser"),
             @Mapping(source = "contactosNotificados", target = "contactsNotified"),
+            @Mapping(source = "status", target = "status"),
+            @Mapping(source = "activatedAt", target = "activatedAt"),
+            @Mapping(source = "closedAt", target = "closedAt"),
+            @Mapping(source = "expiresAt", target = "expiresAt"),
+            @Mapping(source = "closeReason", target = "closeReason")
     })
     Walert toWalert(Walerta walerta);
     @InheritInverseConfiguration

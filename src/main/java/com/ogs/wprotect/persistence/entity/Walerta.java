@@ -1,6 +1,18 @@
 package com.ogs.wprotect.persistence.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "walerta")
@@ -19,6 +31,21 @@ public class Walerta {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private Wusuario wusuario;
     private Integer contactosNotificados;
+
+    // Campos de ciclo de vida
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AlertStatus status = AlertStatus.ACTIVE;
+
+    @Column(nullable = false)
+    private LocalDateTime activatedAt;
+
+    private LocalDateTime closedAt;
+
+    private LocalDateTime expiresAt;
+
+    @Enumerated(EnumType.STRING)
+    private CloseReason closeReason;
 
     public Integer getId() {
         return id;
@@ -82,5 +109,46 @@ public class Walerta {
 
     public void setContactosNotificados(Integer contactosNotificados) {
         this.contactosNotificados = contactosNotificados;
+    }
+
+    // Getters y Setters para campos de ciclo de vida
+    public AlertStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AlertStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getActivatedAt() {
+        return activatedAt;
+    }
+
+    public void setActivatedAt(LocalDateTime activatedAt) {
+        this.activatedAt = activatedAt;
+    }
+
+    public LocalDateTime getClosedAt() {
+        return closedAt;
+    }
+
+    public void setClosedAt(LocalDateTime closedAt) {
+        this.closedAt = closedAt;
+    }
+
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    public CloseReason getCloseReason() {
+        return closeReason;
+    }
+
+    public void setCloseReason(CloseReason closeReason) {
+        this.closeReason = closeReason;
     }
 }

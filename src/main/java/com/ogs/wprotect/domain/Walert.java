@@ -1,5 +1,7 @@
 package com.ogs.wprotect.domain;
 
+import java.time.LocalDateTime;
+
 public class Walert {
     private Integer id;
     private String message;
@@ -9,6 +11,14 @@ public class Walert {
     private Integer userId;
     private Wuser wuser;
     private Integer contactsNotified;
+    private Boolean emergencyMode;
+
+    // Campos de ciclo de vida
+    private String status;
+    private LocalDateTime activatedAt;
+    private LocalDateTime closedAt;
+    private LocalDateTime expiresAt;
+    private String closeReason;
 
     public Boolean getEmergencyMode() {
         return emergencyMode;
@@ -17,8 +27,6 @@ public class Walert {
     public void setEmergencyMode(Boolean emergencyMode) {
         this.emergencyMode = emergencyMode;
     }
-
-    private Boolean emergencyMode;
 
     public Integer getId() {
         return id;
@@ -81,5 +89,46 @@ public class Walert {
 
     public void setContactsNotified(Integer contactsNotified) {
         this.contactsNotified = contactsNotified;
+    }
+
+    // Getters y Setters para campos de ciclo de vida
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getActivatedAt() {
+        return activatedAt;
+    }
+
+    public void setActivatedAt(LocalDateTime activatedAt) {
+        this.activatedAt = activatedAt;
+    }
+
+    public LocalDateTime getClosedAt() {
+        return closedAt;
+    }
+
+    public void setClosedAt(LocalDateTime closedAt) {
+        this.closedAt = closedAt;
+    }
+
+    public LocalDateTime getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(LocalDateTime expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    public String getCloseReason() {
+        return closeReason;
+    }
+
+    public void setCloseReason(String closeReason) {
+        this.closeReason = closeReason;
     }
 }

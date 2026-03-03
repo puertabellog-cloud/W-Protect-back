@@ -5,6 +5,8 @@ public class LoginResponse {
     private String name;
     private String email;
     private String token; // opcional
+    //Nota: el token puede ser null por lo cual es recomendable usar Nullable,sino es null y
+    //es un valor o caracter vacio,se recomineda Optional<> ya que puede generar confusion en la logica de negocio
 
     public LoginResponse(Integer id, String name, String email, String token) {
         this.id = id;
