@@ -1,17 +1,19 @@
 package com.ogs.wprotect.domain.service;
 
-import com.ogs.wprotect.domain.Walert;
-import com.ogs.wprotect.domain.repository.WalertRepository;
-import com.ogs.wprotect.persistence.entity.Walerta;
-import com.ogs.wprotect.persistence.entity.AlertStatus;
-import com.ogs.wprotect.persistence.entity.CloseReason;
-import com.ogs.wprotect.persistence.mapper.WalertMapper;
-import com.ogs.wprotect.persistence.crud.WalertaCrudRepository;
-import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import com.ogs.wprotect.domain.Walert;
+import com.ogs.wprotect.domain.repository.WalertRepository;
+import com.ogs.wprotect.persistence.crud.WalertaCrudRepository;
+import com.ogs.wprotect.persistence.entity.AlertStatus;
+import com.ogs.wprotect.persistence.entity.CloseReason;
+import com.ogs.wprotect.persistence.entity.Walerta;
+import com.ogs.wprotect.persistence.mapper.WalertMapper;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class WalertService {
