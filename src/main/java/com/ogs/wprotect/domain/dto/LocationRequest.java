@@ -1,31 +1,31 @@
 package com.ogs.wprotect.domain.dto;
 
 public class LocationRequest {
-    private String latitud;
-    private String longitud;
+    private Double latitud;
+    private Double longitud;
     private String mensaje;
 
     public LocationRequest() {}
 
-    public LocationRequest(String latitud, String longitud, String mensaje) {
+    public LocationRequest(Double latitud, Double longitud, String mensaje) {
         this.latitud = latitud;
         this.longitud = longitud;
         this.mensaje = mensaje;
     }
 
-    public String getLatitud() {
+    public Double getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(String latitud) {
+    public void setLatitud(Double latitud) {
         this.latitud = latitud;
     }
 
-    public String getLongitud() {
+    public Double getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(String longitud) {
+    public void setLongitud(Double longitud) {
         this.longitud = longitud;
     }
 
