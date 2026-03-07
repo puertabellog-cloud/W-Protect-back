@@ -22,8 +22,8 @@ public class WubicacionService {
         Wubicacion ubicacion = new Wubicacion();
 
         // supongo que LocationRequest tiene getters de lat/lng/fecha
-        ubicacion.setLatitud(Double.parseDouble(locationRequest.getLatitud()));
-        ubicacion.setLongitud(Double.parseDouble(locationRequest.getLongitud()));
+        ubicacion.setLatitud(locationRequest.getLatitud());
+        ubicacion.setLongitud(locationRequest.getLongitud());
 
         // normalmente aquí harías wubicacionRepository.save(ubicacion);
         return ubicacion;

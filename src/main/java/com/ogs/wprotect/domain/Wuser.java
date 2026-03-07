@@ -7,6 +7,7 @@ public class Wuser {
     private String phone;
     private String profile;
     private boolean active;
+    private boolean emergencyMode;
 
     public int getId() {
         return id;
@@ -54,5 +55,13 @@ public class Wuser {
 
     public void setProfile(String profile) {
         this.profile = profile;
+    }
+
+    public boolean isEmergencyMode() {
+        return emergencyMode;
+    }
+
+    public void setEmergencyMode(boolean emergencyMode) {
+        this.emergencyMode = emergencyMode;
     }
 }
