@@ -1,11 +1,15 @@
 package com.ogs.wprotect.domain.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ogs.wprotect.domain.Walert;
+import com.ogs.wprotect.domain.Wcontact;
+import com.ogs.wprotect.domain.Wuser;
 import com.ogs.wprotect.domain.repository.WalertRepository;
 import com.ogs.wprotect.persistence.crud.WalertaCrudRepository;
 import com.ogs.wprotect.persistence.entity.AlertStatus;
@@ -26,12 +30,21 @@ public class WalertService {
     @Autowired
     private WalertMapper walertMapper;
     
+    @Autowired
+    private TwilioSmsService twilioSmsService;
+    
+    @Autowired
+    private WcontactService wcontactService;
+    
+    @Autowired
+    private WuserService wuserService;
+    
     public Walert save(Walert walert){
         return walertRepository.save(walert);
     }
 
     /**
-     * Crear una nueva alerta con ciclo de vida completo
+     * Crear una nueva alerta con ciclo de vida completo y notificar contactos por SMS
      * @param walert La alerta a crear (DTO del dominio)
      * @return La alerta guardada con todos los campos de ciclo de vida configurados
      */
@@ -53,7 +66,83 @@ public class WalertService {
         
         // Guardar en BD y convertir de vuelta a DTO del dominio
         Walerta savedWalerta = walertaCrudRepository.save(walerta);
-        return walertMapper.toWalert(savedWalerta);
+        Walert createdAlert = walertMapper.toWalert(savedWalerta);
+        
+        // Enviar SMS a contactos de emergencia (asíncrono)
+        notifyEmergencyContacts(createdAlert);
+        
+        return createdAlert;
+    }
+    
+    /**
+     * Notifica a los contactos de emergencia del usuario por SMS
+     * @param walert Alerta creada
+     */
+    private void notifyEmergencyContacts(Walert walert) {
+        // Ejecutar en un thread separado para no bloquear
+        new Thread(() -> {
+            try {
+                // Verificar si Twilio está configurado
+                if (!twilioSmsService.isConfigured()) {
+                    System.out.println("⚠ Twilio no configurado. SMS no enviados.");
+                    return;
+                }
+                
+                // Obtener información del usuario
+                Optional<Wuser> userOpt = wuserService.getById(walert.getUserId());
+                if (userOpt.isEmpty()) {
+                    System.err.println("✗ Usuario no encontrado: " + walert.getUserId());
+                    return;
+                }
+                Wuser user = userOpt.get();
+                
+                // Obtener contactos de emergencia
+                Optional<List<Wcontact>> contactsOpt = wcontactService.getByWuserId(walert.getUserId());
+                if (contactsOpt.isEmpty() || contactsOpt.get().isEmpty()) {
+                    System.out.println("ℹ Usuario " + user.getName() + " no tiene contactos de emergencia.");
+                    return;
+                }
+                
+                List<Wcontact> contacts = contactsOpt.get();
+                int sentCount = 0;
+                
+                // Enviar SMS a cada contacto
+                for (Wcontact contact : contacts) {
+                    String phone = contact.getPhone();
+                    
+                    // Validar formato de teléfono (debe incluir código de país)
+                    if (phone == null || phone.isEmpty()) {
+                        System.out.println("⚠ Contacto " + contact.getName() + " sin teléfono.");
+                        continue;
+                    }
+                    
+                    // Asegurar que tenga el prefijo +
+                    if (!phone.startsWith("+")) {
+                        System.out.println("⚠ Teléfono de " + contact.getName() + " sin código de país: " + phone);
+                        continue;
+                    }
+                    
+                    // Enviar SMS
+                    String sid = twilioSmsService.sendEmergencyAlert(
+                        phone, 
+                        user.getName(), 
+                        walert.getLatitud(), 
+                        walert.getLongitud(), 
+                        walert.getMessage()
+                    );
+                    
+                    if (sid != null) {
+                        sentCount++;
+                    }
+                }
+                
+                System.out.println("✓ SMS enviados: " + sentCount + "/" + contacts.size());
+                
+            } catch (Exception e) {
+                System.err.println("✗ Error notificando contactos: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }).start();  // Ejecutar en background
     }
 
     /**
