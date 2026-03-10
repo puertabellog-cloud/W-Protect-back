@@ -1,12 +1,18 @@
 package com.ogs.wprotect.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class Wuser {
     private int id;
     private String name;
     private String email;
+    @JsonAlias({"phoneNumber", "telefono"})
     private String phone;
+    @JsonAlias({"role", "perfil"})
     private String profile;
+    @JsonAlias({"isActive", "activo"})
     private boolean active;
+    @JsonAlias({"isEmergencyMode", "modoEmergencia"})
     private boolean emergencyMode;
 
     public int getId() {

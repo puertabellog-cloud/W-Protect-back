@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ogs.wprotect.domain.Walert;
@@ -39,6 +41,12 @@ public class WalertService {
     @Autowired
     private WuserService wuserService;
     
+    @Value("${alert.auto-close-seconds:30}")
+    private long alertAutoCloseSeconds;
+
+    @Value("${alert.auto-close-check-ms:5000}")
+    private long alertAutoCloseCheckMs;
+    
     public Walert save(Walert walert){
         return walertRepository.save(walert);
     }
@@ -51,26 +59,35 @@ public class WalertService {
     public Walert createAlert(Walert walert) {
         // Convertir DTO del dominio a entidad JPA
         Walerta walerta = walertMapper.toWalerta(walert);
-        
+
         // Configurar explícitamente los campos de ciclo de vida
         walerta.setStatus(AlertStatus.ACTIVE);
-        
-        // Usar una única instancia de LocalDateTime para evitar micro-diferencias de milisegundos
+
         LocalDateTime now = LocalDateTime.now();
         walerta.setActivatedAt(now);
-        walerta.setExpiresAt(now.plusMinutes(60));
-        
+        walerta.setExpiresAt(now.plusSeconds(alertAutoCloseSeconds));
+
+        // Valores por defecto para evitar nulls en respuesta
+        if (walerta.getTimestamp() == null || walerta.getTimestamp().isBlank()) {
+            walerta.setTimestamp(now.toString());
+        }
+        if (walerta.getEmergencyMode() == null) {
+            walerta.setEmergencyMode(Boolean.FALSE);
+        }
+
+        int contactsCount = wcontactService.getByWuserId(walerta.getUserId())
+                .map(List::size)
+                .orElse(0);
+        walerta.setContactosNotificados(contactsCount);
+
         // No establecer closedAt ni closeReason en la creación
         walerta.setClosedAt(null);
         walerta.setCloseReason(null);
-        
-        // Guardar en BD y convertir de vuelta a DTO del dominio
+
         Walerta savedWalerta = walertaCrudRepository.save(walerta);
         Walert createdAlert = walertMapper.toWalert(savedWalerta);
-        
-        // Enviar SMS a contactos de emergencia (asíncrono)
+
         notifyEmergencyContacts(createdAlert);
-        
         return createdAlert;
     }
     
@@ -127,8 +144,7 @@ public class WalertService {
                         phone, 
                         user.getName(), 
                         walert.getLatitud(), 
-                        walert.getLongitud(), 
-                        walert.getMessage()
+                        walert.getLongitud()
                     );
                     
                     if (sid != null) {
@@ -143,6 +159,28 @@ public class WalertService {
                 e.printStackTrace();
             }
         }).start();  // Ejecutar en background
+    }
+
+    /**
+     * Cierra automaticamente alertas ACTIVE cuyo expiresAt ya paso.
+     * Para pruebas locales se puede usar alert.auto-close-seconds=30.
+     */
+    @Scheduled(fixedDelayString = "${alert.auto-close-check-ms:5000}")
+    public void autoCloseExpiredAlerts() {
+        LocalDateTime now = LocalDateTime.now();
+        List<Walerta> expiredActiveAlerts = walertaCrudRepository
+                .findByStatusAndExpiresAtBefore(AlertStatus.ACTIVE, now);
+
+        if (expiredActiveAlerts.isEmpty()) {
+            return;
+        }
+
+        for (Walerta alert : expiredActiveAlerts) {
+            alert.setStatus(AlertStatus.CLOSED);
+            alert.setClosedAt(now);
+            alert.setCloseReason(CloseReason.EXPIRED);
+            walertaCrudRepository.save(alert);
+        }
     }
 
     /**

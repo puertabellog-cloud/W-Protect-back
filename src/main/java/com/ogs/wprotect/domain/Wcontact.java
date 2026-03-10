@@ -1,10 +1,14 @@
 package com.ogs.wprotect.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class Wcontact {
     private Integer id;
     private String name;
+    @JsonAlias({"phoneNumber", "telefono"})
     private String phone;
     private String alias;
+    @JsonAlias({"userId", "usuarioId", "wuserId"})
     private Integer wusuarioId;
     private Wuser wuser;
 
