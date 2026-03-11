@@ -16,7 +16,6 @@ public interface WcontactMapper {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "nombre", target = "name"),
             @Mapping(source = "telefono", target = "phone"),
-            @Mapping(source = "alias", target = "alias"),
             @Mapping(source = "wusuarioId", target = "wusuarioId"),
             @Mapping(source = "wusuario", target = "wuser"),
     })

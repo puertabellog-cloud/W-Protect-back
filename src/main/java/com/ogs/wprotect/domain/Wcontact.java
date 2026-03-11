@@ -7,7 +7,6 @@ public class Wcontact {
     private String name;
     @JsonAlias({"phoneNumber", "telefono"})
     private String phone;
-    private String alias;
     @JsonAlias({"userId", "usuarioId", "wuserId"})
     private Integer wusuarioId;
     private Wuser wuser;
@@ -34,14 +33,6 @@ public class Wcontact {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
     }
 
     public Integer getWusuarioId() {
