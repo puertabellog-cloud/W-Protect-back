@@ -1,8 +1,15 @@
 package com.ogs.wprotect.domain.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class LocationRequest {
+    @JsonAlias({"latitude", "lat"})
     private Double latitud;
+    @JsonAlias({"longitude", "lng"})
     private Double longitud;
+    @JsonAlias({"accuracy", "precission", "precision"})
+    private Double accuracy;
+    @JsonAlias({"message", "mensaje"})
     private String mensaje;
 
     public LocationRequest() {}
@@ -27,6 +34,14 @@ public class LocationRequest {
 
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
+    }
+
+    public Double getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Double accuracy) {
+        this.accuracy = accuracy;
     }
 
     public String getMensaje() {

@@ -32,6 +32,9 @@ public class Walerta {
     private Wusuario wusuario;
     private Integer contactosNotificados;
 
+    @Column(name = "emergency_mode", columnDefinition = "boolean default false")
+    private Boolean emergencyMode;
+
     // Campos de ciclo de vida
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -109,6 +112,14 @@ public class Walerta {
 
     public void setContactosNotificados(Integer contactosNotificados) {
         this.contactosNotificados = contactosNotificados;
+    }
+
+    public Boolean getEmergencyMode() {
+        return emergencyMode;
+    }
+
+    public void setEmergencyMode(Boolean emergencyMode) {
+        this.emergencyMode = emergencyMode;
     }
 
     // Getters y Setters para campos de ciclo de vida

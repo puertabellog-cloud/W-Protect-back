@@ -18,6 +18,7 @@ public interface WalertMapper {
             @Mapping(source = "userId", target = "userId"),
             @Mapping(source = "wusuario", target = "wuser"),
             @Mapping(source = "contactosNotificados", target = "contactsNotified"),
+            @Mapping(source = "emergencyMode", target = "emergencyMode"),
             @Mapping(source = "status", target = "status"),
             @Mapping(source = "activatedAt", target = "activatedAt"),
             @Mapping(source = "closedAt", target = "closedAt"),
