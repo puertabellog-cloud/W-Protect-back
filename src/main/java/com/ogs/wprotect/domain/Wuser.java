@@ -8,6 +8,16 @@ public class Wuser {
     private String profile;
     private boolean active;
     private boolean emergencyMode;
+    private String deviceId;
+
+    
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public int getId() {
         return id;
