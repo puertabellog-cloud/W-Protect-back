@@ -1,5 +1,6 @@
 package com.ogs.wprotect.domain.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,10 @@ import com.ogs.wprotect.domain.repository.WuserRepository;
 public class WuserService implements UserDetailsService {
     @Autowired
     private WuserRepository wuserRepository;
+
+    public List<Wuser> getAll(){
+        return wuserRepository.getAll();
+    }
 
     public Wuser getByEmail(String email){
         return wuserRepository.getByEmail(email);

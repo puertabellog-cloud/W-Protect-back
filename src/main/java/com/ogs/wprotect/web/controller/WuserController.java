@@ -1,5 +1,7 @@
 package com.ogs.wprotect.web.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,13 @@ import com.ogs.wprotect.domain.service.WuserService;
 public class WuserController {
     @Autowired
     private WuserService wuserService;
+
+    @com.ogs.wprotect.web.security.RequireAdmin
+    @GetMapping("")
+    public ResponseEntity<List<Wuser>> getAll() {
+        return new ResponseEntity<>(wuserService.getAll(), HttpStatus.OK);
+    }
+
     @GetMapping("/email/{email}")
     public ResponseEntity<Wuser> getByEmail(@PathVariable("email") String email) {
         return new ResponseEntity<>(wuserService.getByEmail(email), HttpStatus.OK);
