@@ -24,11 +24,13 @@ public class WlibraryController {
     @Autowired
     private WlibraryService wlibraryService;
 
+    @com.ogs.wprotect.web.security.RequireAdmin
     @GetMapping("")
     public ResponseEntity<List<WLibrary>> getAll() {
         return new ResponseEntity<>(wlibraryService.getAll(), HttpStatus.OK);
     }
 
+    @com.ogs.wprotect.web.security.RequireAdmin
     @GetMapping("/{id}")
     public ResponseEntity<WLibrary> getById(@PathVariable Integer id) {
         Optional<WLibrary> library = wlibraryService.getById(id);
@@ -36,17 +38,20 @@ public class WlibraryController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @com.ogs.wprotect.web.security.RequireAdmin
     @PostMapping("/save")
     public ResponseEntity<WLibrary> save(@RequestBody WLibrary wLibrary) {
         return new ResponseEntity<>(wlibraryService.save(wLibrary), HttpStatus.CREATED);
     }
 
+    @com.ogs.wprotect.web.security.RequireAdmin
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         wlibraryService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @com.ogs.wprotect.web.security.RequireAdmin
     @PatchMapping("/edit/{id}")
     public ResponseEntity<WLibrary> patch(@PathVariable Integer id, @RequestBody WLibrary patchData) {
         WLibrary updated = wlibraryService.patchById(id, patchData.getName(), patchData.getDescription(), patchData.getUrl());
