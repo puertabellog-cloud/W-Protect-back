@@ -1,8 +1,14 @@
 package com.ogs.wprotect.persistence.entity;
 
-import jakarta.persistence.*;
-
 import java.util.List;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name="wusuario")
@@ -16,10 +22,19 @@ public class Wusuario {
     private String perfil;
     private String telefono;
     private Boolean activo;
+    @Column(name = "device_id")
+    private String deviceId;
     @OneToMany(mappedBy = "wusuario")
     private List<Wcontacto> wcontactos;
     @OneToMany(mappedBy = "wusuario")
     private List<Walerta> walertas;
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public Boolean getEmergencyMode() {
         return emergencyMode;

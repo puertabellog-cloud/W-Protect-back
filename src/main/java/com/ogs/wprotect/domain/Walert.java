@@ -1,16 +1,23 @@
 package com.ogs.wprotect.domain;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 import java.time.LocalDateTime;
 
 public class Walert {
     private Integer id;
     private String message;
+    @JsonAlias({"latitude", "lat", "latitud"})
     private String latitud;
+    @JsonAlias({"longitude", "lng", "longitud"})
     private String longitud;
+    @JsonAlias({"createdAt", "fecha"})
     private String timestamp;
+    @JsonAlias({"usuarioId", "user_id"})
     private Integer userId;
     private Wuser wuser;
     private Integer contactsNotified;
+    @JsonAlias({"emergency_mode", "modoEmergencia"})
     private Boolean emergencyMode;
 
     // Campos de ciclo de vida

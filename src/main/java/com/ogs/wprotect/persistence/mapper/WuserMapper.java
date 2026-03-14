@@ -15,7 +15,8 @@ public interface WuserMapper {
             @Mapping(source = "email", target = "email"),
             @Mapping(source = "perfil", target = "profile"),
             @Mapping(source = "telefono", target = "phone"),
-            @Mapping(source = "activo", target = "active")
+            @Mapping(source = "activo", target = "active"),
+            @Mapping(source = "emergencyMode", target = "emergencyMode")
     })
     Wuser toWuser(Wusuario wusuario);
 
