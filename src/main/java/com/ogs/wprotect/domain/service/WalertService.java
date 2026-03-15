@@ -212,4 +212,14 @@ public class WalertService {
         Walerta closedWalerta = walertaCrudRepository.save(walerta);
         return walertMapper.toWalert(closedWalerta);
     }
+
+    public List<Walert> getAll() {
+        // Suponiendo que walertRepository tiene un método getAll()
+        return walertRepository.getAll();
+    }
+
+    public Optional<Walert> getById(Integer id) {
+        // Suponiendo que walertRepository tiene un método getById()
+        return walertRepository.getById(id);
+    }
 }
