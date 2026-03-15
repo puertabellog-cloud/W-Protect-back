@@ -33,6 +33,10 @@ public class WuserService implements UserDetailsService {
         return wuserRepository.save(wuser);
     }
 
+    public Wuser patchById(Integer id, String name, String email, String phone) {
+        return wuserRepository.patchById(id, name, email, phone);
+    }
+
     public Optional<Wuser> getByPhone(String phone){
         return wuserRepository.getByPhone(phone);
     }

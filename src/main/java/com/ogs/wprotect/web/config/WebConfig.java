@@ -14,6 +14,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(deviceIdInterceptor)
             .addPathPatterns("/w/**")
-            .excludePathPatterns("/w/users/save", "/w/users/save/"); // Permite crear usuario sin validación (con y sin barra final)
+            .excludePathPatterns(
+                "/w/users/save",
+                "/w/users/save/",
+                "/w/users/email/**"
+            ); // Permite registro y login por email sin validación de headers
     }
 }
