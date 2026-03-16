@@ -64,14 +64,64 @@ public class TwilioSmsService {
             String latitude,
             String longitude
     ) {
-        String safeUserName = (userName == null || userName.isBlank()) ? "usuario" : userName.trim();
-        String safeLatitude = (latitude == null || latitude.isBlank()) ? "sin-dato" : latitude.trim();
-        String safeLongitude = (longitude == null || longitude.isBlank()) ? "sin-dato" : longitude.trim();
+        String displayName = resolveDisplayName(userName);
+        String safeLatitude = (latitude == null || latitude.isBlank()) ? null : latitude.trim();
+        String safeLongitude = (longitude == null || longitude.isBlank()) ? null : longitude.trim();
 
-        String messageBody = "WPROTECT alerta de emergencia de " + safeUserName
-                + ". Ubicacion: " + safeLatitude + "," + safeLongitude;
+        String messageBody;
+
+        if (safeLatitude != null && safeLongitude != null) {
+            String mapsUrl = "maps.google.com/maps?q=" + safeLatitude + "," + safeLongitude;
+
+            messageBody = displayName + " necesita que la ubiques urgentemente. "
+                    + "Accede a este link para conocer su ubicacion: "
+                    + mapsUrl;
+        } else {
+            messageBody = displayName + " activo una alerta en WProtect. "
+                    + "Intenta comunicarte con ella lo antes posible.";
+        }
+
+        logger.info("Alerta de emergencia | Para: {} | Nombre resuelto: {} | Mensaje: {}",
+                toPhoneNumber, displayName, messageBody);
 
         return sendSms(toPhoneNumber, messageBody);
+    }
+
+    private String resolveDisplayName(String userName) {
+        if (userName == null || userName.isBlank()) {
+            return "Tu contacto";
+        }
+
+        String value = userName.trim();
+
+        // Si llega correo, convierte a una etiqueta legible en vez de exponer email completo.
+        if (value.contains("@")) {
+            String localPart = value.substring(0, value.indexOf('@')).replace('.', ' ').replace('_', ' ').trim();
+            if (!localPart.isEmpty()) {
+                return toTitleCase(localPart);
+            }
+            return "Tu contacto";
+        }
+
+        return value;
+    }
+
+    private String toTitleCase(String input) {
+        String[] parts = input.split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (String p : parts) {
+            if (p.isEmpty()) {
+                continue;
+            }
+            if (sb.length() > 0) {
+                sb.append(' ');
+            }
+            sb.append(Character.toUpperCase(p.charAt(0)));
+            if (p.length() > 1) {
+                sb.append(p.substring(1).toLowerCase());
+            }
+        }
+        return sb.length() == 0 ? "Tu contacto" : sb.toString();
     }
 
     public boolean isConfigured() {
