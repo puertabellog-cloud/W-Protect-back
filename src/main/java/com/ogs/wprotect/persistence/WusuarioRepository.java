@@ -37,7 +37,28 @@ public class WusuarioRepository implements WuserRepository {
 
     @Override
     public Wuser save(Wuser wuser) {
-        Wusuario wusuario = mapper.toWusuario(wuser);
+        Wusuario wusuario;
+        if (wuser.getId() != 0) {
+            // Update: fetch existing entity to preserve password if not changed
+            Optional<Wusuario> existingOpt = wusuarioCrudRepository.findById(wuser.getId());
+            if (existingOpt.isPresent()) {
+                wusuario = existingOpt.get();
+                wusuario.setNombre(wuser.getName());
+                wusuario.setEmail(wuser.getEmail());
+                wusuario.setPerfil(wuser.getProfile());
+                wusuario.setTelefono(wuser.getPhone());
+                wusuario.setActivo(wuser.isActive());
+                wusuario.setDeviceId(wuser.getDeviceId());
+                wusuario.setEmergencyMode(wuser.isEmergencyMode());
+                if (wuser.getPassword() != null && !wuser.getPassword().isBlank()) {
+                    wusuario.setPassword(wuser.getPassword());
+                }
+            } else {
+                wusuario = mapper.toWusuario(wuser);
+            }
+        } else {
+            wusuario = mapper.toWusuario(wuser);
+        }
         return mapper.toWuser(wusuarioCrudRepository.save(wusuario));
     }
 

@@ -16,6 +16,9 @@ public class Wuser {
     private boolean emergencyMode;
     private String deviceId;
 
+    // Password field for authentication (hashed in DB)
+    private String password;
+
     
     public String getDeviceId() {
         return deviceId;
@@ -23,6 +26,14 @@ public class Wuser {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getId() {
