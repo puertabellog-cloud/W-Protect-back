@@ -24,6 +24,8 @@ public class Wusuario {
     private Boolean activo;
     @Column(name = "device_id")
     private String deviceId;
+    @Column(name = "password", nullable = false)
+    private String password;
     @OneToMany(mappedBy = "wusuario")
     private List<Wcontacto> wcontactos;
     @OneToMany(mappedBy = "wusuario")
@@ -34,6 +36,14 @@ public class Wusuario {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Boolean getEmergencyMode() {

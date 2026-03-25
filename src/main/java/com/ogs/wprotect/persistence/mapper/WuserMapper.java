@@ -17,6 +17,7 @@ public interface WuserMapper {
             @Mapping(source = "telefono", target = "phone"),
             @Mapping(source = "activo", target = "active"),
             @Mapping(source = "emergencyMode", target = "emergencyMode")
+            ,@Mapping(source = "password", target = "password")
     })
     Wuser toWuser(Wusuario wusuario);
 
@@ -24,6 +25,7 @@ public interface WuserMapper {
     @Mappings({
             @Mapping(target = "wcontactos", ignore = true),
             @Mapping(target = "walertas", ignore = true),
+            @Mapping(target = "password", source = "password")
     })
     Wusuario toWusuario(Wuser wuser);
 }

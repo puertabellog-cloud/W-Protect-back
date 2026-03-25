@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface WusuarioCrudRepository  extends CrudRepository<Wusuario, Integer> {
     Wusuario findByEmail(String email);
     Optional<Wusuario> findByTelefono(String telefono);
-    Optional<Wusuario> findById(Integer id);
+    // findById is inherited from CrudRepository
 }
