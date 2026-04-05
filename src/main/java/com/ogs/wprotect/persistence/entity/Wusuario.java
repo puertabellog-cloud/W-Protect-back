@@ -24,7 +24,7 @@ public class Wusuario {
     private Boolean activo;
     @Column(name = "device_id")
     private String deviceId;
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
     @OneToMany(mappedBy = "wusuario")
     private List<Wcontacto> wcontactos;
