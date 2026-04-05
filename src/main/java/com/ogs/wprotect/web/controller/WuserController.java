@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ogs.wprotect.domain.Wuser;
+import com.ogs.wprotect.domain.dto.LoginRequest;
 import com.ogs.wprotect.domain.service.WuserService;
 
 @RestController
@@ -31,6 +32,38 @@ public class WuserController {
     @GetMapping("/email/{email}")
     public ResponseEntity<Wuser> getByEmail(@PathVariable("email") String email) {
         return new ResponseEntity<>(wuserService.getByEmail(email), HttpStatus.OK);
+    }
+
+    /**
+     * Login: valida email, password y estado activo del usuario
+     * Endpoint público - no requiere headers X-User-Id ni X-Device-Id
+     * Validaciones:
+     * ✅ Email debe existir en BD
+     * ✅ Password debe coincidir con hash registrado
+     * ✅ Usuario debe estar activo (active = true)
+     * ✅ Devuelve usuario completo con id y deviceId
+     */
+    @PostMapping("/login")
+    public ResponseEntity<Wuser> login(@RequestBody LoginRequest request) {
+        try {
+            if (request.getEmail() == null || request.getEmail().isBlank() ||
+                request.getPassword() == null || request.getPassword().isBlank()) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            Wuser user = wuserService.authenticateUser(
+                request.getEmail().toLowerCase(),
+                request.getPassword()
+            );
+            
+            if (user != null) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PostMapping("/save")

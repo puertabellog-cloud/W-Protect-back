@@ -17,7 +17,8 @@ public class WebConfig implements WebMvcConfigurer {
             .excludePathPatterns(
                 "/w/users/save",
                 "/w/users/save/",
+                "/w/users/login",
                 "/w/users/email/**"
-            ); // Permite registro y login por email sin validación de headers
+            ); // Permite registro, login y búsqueda por email sin validación de headers
     }
 }
